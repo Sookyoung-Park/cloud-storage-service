@@ -38,7 +38,7 @@ const layout = ({children}: {children: React.ReactNode}) => {
         <section className="flex flex-1 flex-col items-center bg-white justify-center py-10 p-4 lg:justify-center lg:p-10 lg:py-0">
             <div className="mb-16 lg:hidden">
                 <Image 
-                    src="/assets/icons/auth-logo.svg"
+                    src="/assets/icons/logo-full-brand.svg"
                     alt="logo"
                     width={224}
                     height={80}
@@ -46,7 +46,7 @@ const layout = ({children}: {children: React.ReactNode}) => {
                 />
             </div>
             {children}
-        </section>
+        </section>logo
         
     </div>
   )
