@@ -46,7 +46,7 @@ const layout = ({children}: {children: React.ReactNode}) => {
                 />
             </div>
             {children}
-        </section>logo
+        </section>
         
     </div>
   )

@@ -44,6 +44,8 @@ const AuthForm = ({type}:{type:FormType}) => {
   const onSubmit= async(values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    setIsLoading(true)
+    setErrorMesage("")
     console.log(values)
   }
   return (
@@ -64,7 +66,8 @@ const AuthForm = ({type}:{type:FormType}) => {
                         <FormControl>
                             <Input 
                                 placeholder="Enter your full name" 
-                                className='shad-input'/>
+                                className='shad-input'
+                                {...field}/>
                         </FormControl>
                         </div>
                     <FormMessage className='shad-form-message' />
@@ -83,7 +86,9 @@ const AuthForm = ({type}:{type:FormType}) => {
                         <FormControl>
                             <Input 
                                 placeholder="Enter your email" 
-                                className='shad-input'/>
+                                className='shad-input'
+                                {...field}/>
+                                
                         </FormControl>
                         </div>
                     <FormMessage className='shad-form-message' />
