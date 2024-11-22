@@ -8,7 +8,7 @@ const layout = ({children}: {children: React.ReactNode}) => {
         <section className='bg-brand p-10 hidden w-1/2 items-center justify-center lg:flex xl:w-2/5'>
             <div className='flex max-h-[800px] max-w-[430px] flex-col justify-center space-y-12'>
                 <Image 
-                    src="/auth-logo.svg"
+                    src="assets/icons/auth-logo.svg"
                     alt="logo"
                     width={224}
                     height={80}
@@ -25,7 +25,7 @@ const layout = ({children}: {children: React.ReactNode}) => {
                 </div>
 
                 <Image 
-                    src="/auth-graphic.svg"
+                    src="assets/images/auth-graphic.svg"
                     alt="logo"
                     width={342}
                     height={342}
@@ -35,10 +35,19 @@ const layout = ({children}: {children: React.ReactNode}) => {
         </section>
 
         {/* left side of the auth page */}
-        <section className="flex flex-1 flex-col items-center justify-center py-10 p-4 lg:justify-center lg:p-10 lg:py-0">
-
+        <section className="flex flex-1 flex-col items-center bg-white justify-center py-10 p-4 lg:justify-center lg:p-10 lg:py-0">
+            <div className="mb-16 lg:hidden">
+                <Image 
+                    src="/assets/icons/auth-logo.svg"
+                    alt="logo"
+                    width={224}
+                    height={80}
+                    className="h-auto w-[200px] lg:w-[250px]"
+                />
+            </div>
+            {children}
         </section>
-        {children}
+        
     </div>
   )
 }
