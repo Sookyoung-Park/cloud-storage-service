@@ -38,6 +38,17 @@ const config: Config = {
       fontFamily:{
         poppins: ['var(--font-poppins)']
       },
+      fontWeight: {
+        thin: '100',
+        extralight: '200',
+        light: '300',
+        normal: '400',
+        medium: '500',
+        semibold: '600',
+        bold: '700',
+        extrabold: '800',
+        black: '900',
+      },
       boxShadow:{
         'drop-1': '0px 10px 30px 0px rgba(66, 71, 97, 0.1)',
         'drop-2': '0 8px 30px 0 rgba(65, 89, 214, 0.3)',
