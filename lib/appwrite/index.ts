@@ -1,3 +1,4 @@
+"use server"
 import { cookies } from 'next/headers'
 import {Account, Avatars, Client, Databases, Storage} from 'node-appwrite'
 import { appwriteConfig } from './config'
@@ -25,7 +26,7 @@ export const createSessionClient = async() => {
         }
 }
 
-export const createAccount = async() => {
+export const createAdminClient = async() => {
     const client = new Client()
     .setEndpoint(appwriteConfig.endpointUrl)
     .setProject(appwriteConfig.projectId)
