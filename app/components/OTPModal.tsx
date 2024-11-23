@@ -17,6 +17,7 @@ import {
     InputOTPSlot,
   } from "@/components/ui/input-otp"
 import Image from 'next/image'
+import { Button } from '@/components/ui/button'
 
 const OTPModal = ({email, accountId}: {email:string, accountId: string}) => {
   const [isOpen, setIsOpen] = useState(true)
@@ -74,15 +75,25 @@ const OTPModal = ({email, accountId}: {email:string, accountId: string}) => {
                 <div className="flex w-full flex-col gap-4">
                 <AlertDialogAction className='shad-submit-btn h-12' type="button" onClick={handleSubmit}>
                     Submit
-                    <Image
-                    src="/assets/icons/loader.svg"
-                    width={24}
-                    height={24}
-                    alt="loader"
-                    className='ml-2 animate-spin'
-                />
+                    {isLoading && 
+                        <Image
+                        src="/assets/icons/loader.svg"
+                        width={24}
+                        height={24}
+                        alt="loader"
+                        className='ml-2 animate-spin'
+                        />
+                    }
                 </AlertDialogAction>
-                
+                    <div className="body-2 flex justify-center items-center">
+                        <p className='text-dark-300'>
+                            Didn&apos;t get a code?
+                        </p>
+                        <Button type="button" variant="link" 
+                        className="pl-1 font-medium text-brand">
+                            Click to Resend
+                        </Button>
+                    </div>
                 </div>
             </AlertDialogFooter>
         </AlertDialogContent>
