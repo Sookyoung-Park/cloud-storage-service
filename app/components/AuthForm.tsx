@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import Image from 'next/image'
 import Link from 'next/link'
+import { createAccount } from '@/lib/actions/user.actions'
 
 type FormType = "sign-in" | "sign-up"
 
@@ -28,6 +29,7 @@ const AuthFormSchema = (formType: FormType) => {
 const AuthForm = ({type}:{type:FormType}) => {
     const [isloading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMesage] = useState("")
+    const [accountId, setAccountId ] = useState(null)
 
     const formSchema = AuthFormSchema(type)
 
@@ -45,8 +47,20 @@ const AuthForm = ({type}:{type:FormType}) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsLoading(true)
-    setErrorMesage("")
-    console.log(values)
+    setErrorMesage('')
+    try{
+        const user = await createAccount({
+            fullName: values.fullname || '', 
+            email: values.email
+        })
+        setAccountId(user.accountId)
+    }
+    catch{
+        setErrorMesage("Fail to create an accout. Please try again")
+    }
+    finally{
+        setIsLoading(false)
+    }
   }
   return (
     <>
