@@ -1,8 +1,17 @@
+import Image from 'next/image'
 import React from 'react'
 
 const Header = () => {
   return (
-    <div>Header</div>
+    <header className='header'>
+        
+        <div className="header-wrapper">
+            
+            SearchBar
+            Upload
+            SignOut
+        </div>
+    </header>
   )
 }
 
