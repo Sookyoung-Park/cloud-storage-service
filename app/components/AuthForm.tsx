@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input"
 import Image from 'next/image'
 import Link from 'next/link'
 import { createAccount } from '@/lib/actions/user.actions'
+import { signInUser } from '@/lib/actions/user.actions'
 import OTPModal from './OTPModal'
 
 type FormType = "sign-in" | "sign-up"
@@ -50,13 +51,18 @@ const AuthForm = ({type}:{type:FormType}) => {
     setIsLoading(true)
     setErrorMesage('')
     try{
-        const user = await createAccount({
-            fullName: values.fullname || '', 
-            email: values.email
-        })
-        setAccountId(user.accountId)
+        const user =
+        type === "sign-up"
+          ? await createAccount({
+              fullName: values.fullname || "",
+              email: values.email,
+            })
+          : await signInUser({ email: values.email });
+
+      setAccountId(user.accountId);
     }
-    catch{
+    catch(error){
+        console.log('error!!!', error)
         setErrorMesage("Fail to create an accout. Please try again")
     }
     finally{
@@ -138,8 +144,7 @@ const AuthForm = ({type}:{type:FormType}) => {
         </Form>
         {/* add OTP verification */}
         {/* user has tried to verify herself/himself => accountId */}
-        {/* {accountId && <OTPModal email={form.getValues('email')} accountId={accountId}/>} */}
-        {true && <OTPModal email={form.getValues('email')} accountId={accountId}/>}
+        {accountId && <OTPModal email={form.getValues('email')} accountId={accountId}/>}
     </>
   )
 }

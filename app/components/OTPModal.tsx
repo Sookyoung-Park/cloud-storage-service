@@ -1,28 +1,30 @@
+'use client'
 import React, {useState} from 'react'
 import {
     AlertDialog,
     AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"  
   import {
     InputOTP,
     InputOTPGroup,
-    InputOTPSeparator,
     InputOTPSlot,
   } from "@/components/ui/input-otp"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { verifySecret, SendEmailOTP } from '@/lib/actions/user.actions'
+import { useRouter } from 'next/navigation'
 
 const OTPModal = ({email, accountId}: {email:string, accountId: string}) => {
   const [isOpen, setIsOpen] = useState(true)
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  const router = useRouter()
 
   const handleSubmit = async(e:React.MouseEvent<HTMLButtonElement>) => {
     // control/block user's mouse events
@@ -30,7 +32,11 @@ const OTPModal = ({email, accountId}: {email:string, accountId: string}) => {
     setIsLoading(true)
     try{
         // call api to verify OTP
+        const sessionId= await verifySecret({accountId, password})
 
+        if(sessionId){
+            router.push('/')
+        }
     }
     catch(error){
         console.log('Failed to verify OTP',error)
@@ -40,6 +46,8 @@ const OTPModal = ({email, accountId}: {email:string, accountId: string}) => {
 
   const handleResendOTP=async()=>{
     //   handle API to resend OTP
+    console.log('resent!')
+    await SendEmailOTP({email})
   }
 
     return (
@@ -90,7 +98,7 @@ const OTPModal = ({email, accountId}: {email:string, accountId: string}) => {
                             Didn&apos;t get a code?
                         </p>
                         <Button type="button" variant="link" 
-                        className="pl-1 font-medium text-brand">
+                        className="pl-1 font-medium text-brand" onClick={()=>handleResendOTP()}>
                             Click to Resend
                         </Button>
                     </div>
