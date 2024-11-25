@@ -70,19 +70,20 @@ export const createAccount = async({fullName, email}:{fullName:string, email:str
     }
 }
 
-export const verifySecret = async( {accountId, password} : {accountId:string, password: string} ) => {
+export const verifySecret = async( {accountId, password} : { accountId:string, password: string} ) => {
     try{
+        console.log(accountId, password)
         const { account } = await createAdminClient()
-        const session = await account.createSession(accountId, password)
+        const session = await account.createSession(accountId, password);
+        console.log(session)
+        // (await cookies()).set("appwrite-session", session.secret, {
+        //     path: "/",
+        //     httpOnly: true,
+        //     sameSite: "strict",
+        //     secure: true,
+        // });
 
-        (await cookies()).set("appwrite-session", session.secret, {
-            path: "/",
-            httpOnly: true,
-            sameSite: "strict",
-            secure: true,
-        })
-
-        return parseStringify({sessionId: session.$id})
+        return parseStringify({ sessionId: session.$id });
     }
     catch(error){
         handleError(error, 'Failed to verify OTP')
