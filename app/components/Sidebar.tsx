@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { navItems } from '@/constants'
 import { cn } from '@/lib/utils'
+import Footer from './Footer'
 
 
 const Sidebar = () => {
@@ -35,15 +36,15 @@ const Sidebar = () => {
         })}
         <div>
           <Image 
-          src='/assets/images/files-2.png'
-          alt= "image"
-          width={174}
-          height={174}
-          className="max-lg:hidden mt-10"
+            src='/assets/images/files-2.png'
+            alt= "image"
+            width={174}
+            height={174}
+            className="max-lg:hidden mt-10"
           />
         </div>
       </nav>
-      {/* footer */}
+      <Footer/>
     </section>
   )
 }

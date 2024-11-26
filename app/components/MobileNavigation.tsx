@@ -2,7 +2,7 @@ import React from 'react'
 
 const MobileNavigation = () => {
   return (
-    <div>MobileNavigation</div>
+    <nav className='sm:hidden lg:hidden xl:hidden 2xl:hidden '>MobileNavigation</nav>
   )
 }
 
