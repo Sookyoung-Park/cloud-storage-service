@@ -1,10 +1,9 @@
 "use server"
 
-import { createAdminClient } from "../appwrite"
+import { createAdminClient, createSessionClient } from "../appwrite"
 import { appwriteConfig } from "../appwrite/config"
 import { ID, Query } from "node-appwrite"
 import { parseStringify } from "../utils"
-import { cookies } from "next/headers"
 
 const getUserByEmail = async(email:string)=>{
     const {databases} = await createAdminClient()
@@ -106,3 +105,21 @@ export const signInUser = async ({ email }: { email: string }) => {
       handleError(error, "Failed to sign in user");
     }
   };
+
+export const getCurrentUser = async() => {
+    const {databases, account} = await createSessionClient()
+    const result =await account.get()
+
+    const user = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.userCollectionId,
+        [Query.equal('accountId', result.$id)]
+    )
+
+    if(user.total>=1){
+        return parseStringify(user.documents[0])
+    }
+    else{
+        return null
+    }
+}
