@@ -2,26 +2,25 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Search from './Search'
+import FileUploader from './FileUploader'
 
 const Header = () => {
   return (
     <header className='header'>
-        
+            <Search/>
         <div className="header-wrapper">
-            <div className="search">
-                <Search/>
-            </div>
-            
-            <div className='flex flex-1 gap-5 '>
-                <Button className='uploader-button'>
-                    <Image
-                        src="/assets/icons/upload.svg"
-                        alt="upload"
-                        width={20}
-                        height={20}
-                    />
-                    <p className='text-white subtitle-2'>Upload</p>
-                </Button>
+            <FileUploader/>
+            {/* <Button className='uploader-button' type="submit">
+                <Image
+                    src="/assets/icons/upload.svg"
+                    alt="upload"
+                    width={24}
+                    height={24}
+                    className="w-6"
+                />
+                <p className='text-white subtitle-2'>Upload</p>
+            </Button> */}
+            <form>
                 <Button className='sign-out-button'>
                     <Image
                     src="/assets/icons/logout.svg"
@@ -29,7 +28,7 @@ const Header = () => {
                     width={24}
                     height={24}/>
                 </Button>
-            </div>
+            </form>
         </div>
     </header>
   )

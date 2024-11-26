@@ -17,19 +17,17 @@ import { useRouter } from 'next/navigation'
     //     }
     // }
     return (
-        <footer className='footer'>
+        // <div className='footer'>
             <div className='sidebar-user-info'>
-                <div className="sidebar-user-avatar"
-                    // onClick={handleLogOut}
-                    >
-                        <Image
+                    <Image
                         src="/assets/images/avatar.png"
                         alt="log-out"
                         width={54}
-                        height={54}/>
-                </div>
-                <div>
-                    <h1 className='h5'>
+                        height={54}
+                        className="sidebar-user-avatar"
+                    />
+                <div className='max-lg:hidden'>
+                    <h1 className='h5 capitalize'>
                         Soo Park
                     </h1>
                     <p className='caption'>
@@ -39,7 +37,7 @@ import { useRouter } from 'next/navigation'
                 
             </div>
            
-        </footer>
+        // </div>
     )
 }
 
