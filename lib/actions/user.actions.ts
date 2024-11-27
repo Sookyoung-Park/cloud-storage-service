@@ -2,9 +2,10 @@
 
 import { createAdminClient, createSessionClient } from "../appwrite"
 import { appwriteConfig } from "../appwrite/config"
-import { ID, Query } from "node-appwrite"
+import { ID, Query,  Client, Account } from "node-appwrite"
 import { parseStringify } from "../utils"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
 const getUserByEmail = async(email:string)=>{
     const {databases} = await createAdminClient()
@@ -130,4 +131,23 @@ export const getCurrentUser = async() => {
         console.log('error in getCurrentUser', error)
         
     }
+}
+
+export const UserSignOut = async() => {
+    // Initialize the Account service
+    const account = await createSessionClient()
+
+    try{
+        // Delete the current session
+        // Property 'deleteSession' does not exist on type '{ readonly account: Account; readonly databases: Databases; }'.
+        await account.deleteSession('current')
+        (await cookies()).delete('appwrite-session')
+    }
+    catch(error){
+        handleError(error, 'failed to sign out a user')
+    }
+    finally{
+        redirect('/sign-in')
+    }
+
 }
