@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 import Footer from './Footer'
 
 
-const Sidebar = () => {
+const Sidebar = ({fullName, avatar,email}:{fullName:string, avatar:string, email:string}) => {
   const pathname= usePathname()
 
   return (
@@ -52,7 +52,7 @@ const Sidebar = () => {
             className="max-lg:hidden w-full"
           />
         </div>
-      <Footer/>
+      <Footer fullname={fullName} avatar={avatar} email={email}/>
     </aside>
   )
 }

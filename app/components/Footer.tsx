@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 
 
 // const Footer = ({user, type}:FooterProps) => {
-    const Footer = () => {
+    const Footer = ({fullname, avatar,email}:{fullname:string, avatar:string, email:string}) => {
     // This expression is not callable.
     const router = useRouter();
 
@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation'
         // <div className='footer'>
             <div className='sidebar-user-info'>
                     <Image
-                        src="/assets/images/avatar.png"
+                        src={avatar}
                         alt="log-out"
                         width={54}
                         height={54}
@@ -28,10 +28,10 @@ import { useRouter } from 'next/navigation'
                     />
                 <div className='max-lg:hidden'>
                     <h1 className='h5 capitalize'>
-                        Soo Park
+                        {fullname}
                     </h1>
                     <p className='caption'>
-                        parksk971031@gmail.com
+                        {email}
                     </p>
                 </div>
                 
