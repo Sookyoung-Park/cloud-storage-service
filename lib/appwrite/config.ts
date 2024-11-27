@@ -7,5 +7,5 @@ export const appwriteConfig = {
     fileCollectionId:process.env.NEXT_PUBLIC_APPWRITE_FILES_COLLECTION!,
     bucketId:process.env.NEXT_PUBLIC_APPWRITE_BUCKET!,
     // api key on appwrite
-    secretKey:process.env.NEXT_APPWRITE_SECRET!,
+    secretKey:process.env.NEXT_APPWRITE_KEY!,
 }

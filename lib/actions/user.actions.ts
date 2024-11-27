@@ -4,6 +4,7 @@ import { createAdminClient, createSessionClient } from "../appwrite"
 import { appwriteConfig } from "../appwrite/config"
 import { ID, Query } from "node-appwrite"
 import { parseStringify } from "../utils"
+import { cookies } from "next/headers"
 
 const getUserByEmail = async(email:string)=>{
     const {databases} = await createAdminClient()
@@ -74,13 +75,13 @@ export const verifySecret = async( {accountId, password} : { accountId:string, p
         console.log(accountId, password)
         const { account } = await createAdminClient()
         const session = await account.createSession(accountId, password);
-        console.log(session)
-        // (await cookies()).set("appwrite-session", session.secret, {
-        //     path: "/",
-        //     httpOnly: true,
-        //     sameSite: "strict",
-        //     secure: true,
-        // });
+
+        (await cookies()).set("appwrite-session", session.secret, {
+            path: "/",
+            httpOnly: true,
+            sameSite: "strict",
+            secure: true,
+        });
 
         return parseStringify({ sessionId: session.$id });
     }
@@ -99,7 +100,6 @@ export const signInUser = async ({ email }: { email: string }) => {
         await SendEmailOTP({ email });
         return parseStringify({ accountId: existingUser.accountId });
       }
-  
       return parseStringify({ accountId: null, error: "User not found" });
     } catch (error) {
       handleError(error, "Failed to sign in user");
@@ -107,19 +107,27 @@ export const signInUser = async ({ email }: { email: string }) => {
   };
 
 export const getCurrentUser = async() => {
-    const {databases, account} = await createSessionClient()
-    const result =await account.get()
+    try{
+        const {databases, account} = await createSessionClient()
+        const result =await account.get()
+    
+        const user = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            [Query.equal('accountId', result.$id)]
+        )
 
-    const user = await databases.listDocuments(
-        appwriteConfig.databaseId,
-        appwriteConfig.userCollectionId,
-        [Query.equal('accountId', result.$id)]
-    )
-
-    if(user.total>=1){
-        return parseStringify(user.documents[0])
+        console.log('user: ',user)
+    
+        if(user.total>=1){
+            return parseStringify(user.documents[0])
+        }
+        else{
+            return null
+        }
     }
-    else{
-        return null
+    catch(error){
+        console.log('error in getCurrentUser', error)
+        
     }
 }
