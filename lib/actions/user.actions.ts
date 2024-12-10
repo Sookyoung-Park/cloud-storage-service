@@ -2,7 +2,7 @@
 
 import { createAdminClient, createSessionClient } from "../appwrite"
 import { appwriteConfig } from "../appwrite/config"
-import { ID, Query,  Client, Account } from "node-appwrite"
+import { ID, Query} from "node-appwrite"
 import { parseStringify } from "../utils"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
@@ -102,7 +102,8 @@ export const signInUser = async ({ email }: { email: string }) => {
         return parseStringify({ accountId: existingUser.accountId });
       }
       return parseStringify({ accountId: null, error: "User not found" });
-    } catch (error) {
+    } 
+    catch (error) {
       handleError(error, "Failed to sign in user");
     }
   };
@@ -149,5 +150,5 @@ export const UserSignOut = async() => {
     finally{
         redirect('/sign-in')
     }
-
 }
+
