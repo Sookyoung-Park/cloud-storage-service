@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import { cn, getFileType, convertFileToUrl} from '@/lib/utils'
 import Image from 'next/image'
 import Thumnail from '../components/Thumnail'
+import { MAX_FILE_SIZE } from "@/constants";
+import { useToast } from "@/hooks/use-toast"
 
 
 interface Props {
@@ -14,12 +16,28 @@ interface Props {
 }
 
 const FileUploader = ({ownerId, accountId, className}:Props) => {
+  const { toast }=useToast()
   const [files, setFiles] = useState<File[]>([])
   const onDrop = useCallback(async(acceptedFiles:File[]) => {
     // Do something with the files
     setFiles(acceptedFiles)
+    const uploadPromises=acceptedFiles.map(async(file)=>{
+      if(file.size>MAX_FILE_SIZE){
+        setFiles((prevFiles =>prevFiles.filter((f)=>f.name!==file.name)))
+
+        return toast({
+          title:"Scheduled: Catch up",
+          description:"Friday, Feburary 10, 2023 at 5:57pm"
+        })
+      }
+    })
   }, [])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+  const handleRemoveFile = (e:React.MouseEvent<HTMLImageElement, MouseEvent>, fileName:string) => {
+    e.stopPropagation()
+    setFiles((prevFiles) => prevFiles.filter((file)=>file.name!==fileName))
+  }
 
   return (
     <div {...getRootProps()} className="cursor-pointer">
@@ -42,11 +60,13 @@ const FileUploader = ({ownerId, accountId, className}:Props) => {
                   type={type}
                   extension={extension}
                   url={convertFileToUrl(file)}/>
-                </div>
                 <div className="preview-item-name">
                   {file.name}
                   <Image src="/assets/icons/file-loader.gif" width={80} height={26} alt="Loader"/>
                 </div>
+                </div>
+                <Image src="/assets/icons/remove.svg" width={24} height={24} alt="remove"
+                onClick={(e)=>handleRemoveFile(e,file.name)}/>
               </li>
             )
           })}
