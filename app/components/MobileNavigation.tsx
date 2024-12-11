@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils'
 import FileUploader from './FileUploader'
 import { Button } from '@/components/ui/button'
 
-const MobileNavigation = ({fullName, avatar,email}:{fullName:string, avatar:string, email:string}) => {
+const MobileNavigation = ({$id:ownerId, accountId, fullName, avatar,email}:{$id:string, accountId:string, fullName:string, avatar:string, email:string}) => {
   const [open, setOpen] = useState(false)
   const pathname=usePathname()
 
@@ -76,7 +76,7 @@ const MobileNavigation = ({fullName, avatar,email}:{fullName:string, avatar:stri
             <Separator className="my-5 bg-light-200/20" />
 
             <div className="flex flex-col justify-between gap-5 pb-5">
-              <FileUploader/>
+              <FileUploader ownerId={ownerId} accountId={accountId}/>
               <Button type="submit" className='mobile-sign-out-button'>
                 <Image 
                   src="/assets/icons/logout.svg"

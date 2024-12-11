@@ -1,7 +1,6 @@
 'use server'
 
 import { createAdminClient } from "../appwrite"
-import { handleError } from "./user.actions"
 import { InputFile } from "node-appwrite/file";
 import { appwriteConfig } from "../appwrite/config";
 import { constructFileUrl, getFileType, parseStringify } from "../utils";
@@ -14,13 +13,24 @@ interface UploadFileProps{
     accountId:string,
     path:string
 }
+
+const handleError=(error:unknown, message:string)=>{
+    console.log(error, message)
+    throw error
+}
+
 export const uploadFile=async({file, ownerId, accountId, path}:UploadFileProps)=>{
     const {storage, databases}=await createAdminClient()
 
     try{
         // read a file
         const inputFile=InputFile.fromBuffer(file, file.name)
-        const bucketFile = await storage.createFile(appwriteConfig.bucketId, ID.unique(),inputFile)
+
+        const bucketFile = await storage.createFile(
+            appwriteConfig.bucketId,
+            ID.unique(),
+            inputFile,
+        );
 
         const fileDocument ={
             type:getFileType(bucketFile.name).type,

@@ -23,7 +23,7 @@ const getUserByEmail = async(email:string)=>{
     }
 }
 
-export const handleError=(error:unknown, message:string)=>{
+const handleError=(error:unknown, message:string)=>{
     console.log(error, message)
     throw error
 }
